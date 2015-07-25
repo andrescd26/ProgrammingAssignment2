@@ -29,4 +29,16 @@ inv <- NULL
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
+        inv <- x$getInverse()
+        if (!is.null(inv)) {
+                message("getting cached data")
+                return(inv)
+        }
+        mat <- x$get()
+        inv <- solve(mat, ...)
+        x$setInverse(inv)
+        inv
 }
+my_matrix <- makeCacheMatrix(matrix(7:10, 2, 2))
+my_matrix$get()
+cacheSolve(my_matrix)
